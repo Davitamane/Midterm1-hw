@@ -1,28 +1,3 @@
-/*
-მოცემულია სტუდენტების მასივი მათი ნიშნებით, განახორციელეთ შემდეგი ფუნქციები:
-
-1. getSubjectsStatistics(students)
-   - გამოთვალეთ თითოეული სტუდენტის საშუალო ქულა
-   - დააბრუნეთ ობიექტი, რომელსაც ექნება გასაღები "name" და "avarge"
-   - [{name: "John Doe", avarage: 85}]
-
-2. getHighAchievers(students, gradeThreshold)
-   - გაფილტრეთ სტუდენტები, რომელთა საშუალო ქულა აღემატება მოცემულ ზღვარს
-   - დააბრუნეთ სტუდენტების სახელები და გვარები ერთიან სტრიქონად: ["George Smith", "Anna Johnson", ...]
-
-3. getMultiAchivers(students, threshold)
-   - იპოვეთ სტუდენტები, რომლებსაც აქვთ მაღალი ქულები (> threshold) მინიმუმ ორ საგანში
-   - დააბრუნეთ მასივი ობიექტებით, სადაც მითითებულია სტუდენტის სახელი და aმ საგნების რაოდენობა,
-     რომლებშიც მას აქვს threshold-ზე მეტი ქულა
-   - მაგ: [{name: "Anna Johnson", expertSubjects: 2}, {name: "Benjamin Harris", expertSubjects: 3}]
-
-
-მოთხოვნები:
-- გამოიყენეთ მასივის მეთოდები (map, filter, reduce და ა.შ.)
-- არ შეცვალოთ ორიგინალი მონაცემები
-- დააბრუნეთ ახალი მონაცემები ყველა ფუნქციისთვის
-*/
-
 const students = [
   {
     firstName: "George",
@@ -161,16 +136,74 @@ const students = [
   },
 ];
 
+/*
+მოცემულია სტუდენტების მასივი მათი ნიშნებით, განახორციელეთ შემდეგი ფუნქციები:
+
+1. getSubjectsStatistics(students)
+   - გამოთვალეთ თითოეული სტუდენტის საშუალო ქულა
+   - დააბრუნეთ ობიექტი, რომელსაც ექნება გასაღები "name" და "avarge"
+   - [{name: "John Doe", avarage: 85}]
+
+2. getHighAchievers(students, gradeThreshold)
+   - გაფილტრეთ სტუდენტები, რომელთა საშუალო ქულა აღემატება მოცემულ ზღვარს
+   - დააბრუნეთ სტუდენტების სახელები და გვარები ერთიან სტრიქონად: ["George Smith", "Anna Johnson", ...]
+
+3. getMultiAchivers(students, threshold)
+   - იპოვეთ სტუდენტები, რომლებსაც აქვთ მაღალი ქულები (> threshold) მინიმუმ ორ საგანში
+   - დააბრუნეთ მასივი ობიექტებით, სადაც მითითებულია სტუდენტის სახელი და aმ საგნების რაოდენობა,
+     რომლებშიც მას აქვს threshold-ზე მეტი ქულა
+   - მაგ: [{name: "Anna Johnson", expertSubjects: 2}, {name: "Benjamin Harris", expertSubjects: 3}]
+
+
+მოთხოვნები:
+- გამოიყენეთ მასივის მეთოდები (map, filter, reduce და ა.შ.)
+- არ შეცვალოთ ორიგინალი მონაცემები
+- დააბრუნეთ ახალი მონაცემები ყველა ფუნქციისთვის
+*/
+
 function getSubjectsStatistics(students) {
-  // თქვენი კოდი აქ
+  return students.map((student) => {
+    const average =
+      (student.grades.math + student.grades.history + student.grades.physics) /
+      3;
+    return {
+      name: student.firstName + " " + student.lastName,
+      average: average.toFixed(1),
+    };
+  });
 }
 
 function getHighAchievers(students, gradeThreshold) {
-  // თქვენი კოდი აქ
+  return students
+    .filter((student) => {
+      const average =
+        (student.grades.math +
+          student.grades.history +
+          student.grades.physics) /
+        3;
+      return average > gradeThreshold;
+    })
+    .map((student) => `${student.firstName} ${student.lastName}`);
 }
 
 function getMultiAchivers(students, threshold) {
-  // თქვენი კოდი აქ
+  return students
+    .map((student) => {
+      let count = 0;
+      const gradedArray = Object.values(student.grades);
+
+      gradedArray.forEach((grade) => {
+        if (grade > threshold) count++;
+      });
+
+      if (count >= 2) {
+        return {
+          name: `${student.firstName} ${student.lastName}`,
+          expertSubjects: count,
+        };
+      } else return;
+    })
+    .filter((student) => student);
 }
 
 // ტესტები

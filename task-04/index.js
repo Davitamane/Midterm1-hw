@@ -64,3 +64,38 @@ const users = [
     avatar: "https://fakeimg.pl/150x150",
   },
 ];
+const container = document.getElementById("userList");
+const search = document.querySelector(".search-input");
+
+function renderUsers(users) {
+  container.innerHTML = "";
+  users.forEach((user) => {
+    const HTML = `
+        <div class="card">
+          <div class="card-header">
+            <div class="user-info">
+              <div class="avatar">
+                <img src="${user.avatar}" alt="${user.id}" />
+              </div>
+              <div class="user-details">
+                <h3>${user.name}</h3>
+                <p class="user-email">${user.email}</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-content">
+            <p class="user-id">User ID: ${user.id}</p>
+          </div>
+        </div> 
+    `;
+    container.insertAdjacentHTML("beforeend", HTML);
+  });
+}
+renderUsers(users);
+search.addEventListener("input", () => {
+  const text = search.value.toLowerCase();
+  const filteredUsers = users.filter((user) => {
+    return user.name.toLowerCase().includes(text);
+  });
+  renderUsers(filteredUsers);
+});

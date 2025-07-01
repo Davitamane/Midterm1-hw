@@ -28,6 +28,42 @@
 
 // თქვენი კოდი აქ
 
+class Shape {
+  constructor(shapeName, color) {
+    this.shapeName = shapeName;
+    this.color = color;
+  }
+
+  getInfo() {
+    return `This is a ${this.shapeName} and its color is ${this.color}`;
+  }
+}
+class Circle extends Shape {
+  constructor(shapeName, color, radius) {
+    super(shapeName, color);
+    this.radius = radius;
+  }
+  getArea() {
+    return (Math.PI * this.radius) ^ 2;
+  }
+  getInfo() {
+    return `This is a ${this.shapeName} and its color is ${this.color}. It has a radius of ${this.radius}`;
+  }
+}
+class Rectangle extends Shape {
+  constructor(shapeName, color, width, height) {
+    super(shapeName, color);
+    this.width = width;
+    this.height = height;
+  }
+  getArea() {
+    return this.width * this.height;
+  }
+  getInfo() {
+    return `This is a ${this.shapeName} and its color is ${this.color}. It has width ${this.width} and height ${this.height}`;
+  }
+}
+
 // ტესტის შემთხვევები
 const circle = new Circle("circle", "red", 5);
 const rectangle = new Rectangle("rectangle", "blue", 4, 6);
